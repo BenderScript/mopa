@@ -25,6 +25,10 @@ Finally, I faced a couple of [bugs](https://github.com/istio/istio/issues/9459) 
 
 Therefore I thought it was would be nice for me to give back to the community by writing this small walkthough.
 
+## Background
+
+I suggest you read the page on [Policies and Telemetry](https://istio.io/docs/concepts/policies-and-telemetry/).
+
 ## Setup
 
 1. Follow the Istio Dev Guide up to and including [Setting Up Environment Variables](https://github.com/istio/istio/wiki/Dev-Guide#setting-up-environment-variables)
@@ -45,13 +49,47 @@ Therefore I thought it was would be nice for me to give back to the community by
 
 3. Follow the overall structure of the original MOPA walkthough but use the _mygrpcadapter_ from this repo.
 
-4. When Testing I use the following _mixc_ CLI in order to fully exercise the code. Notice that I am using MACOS.
-    ```
-    $GOPATH/out/darwin_amd64/release/mixc report --timestamp_attributes request.time="2017-07-04T00:01:10Z" -s destination.service="svc.cluster.local",source.user=”kubernetes://nets-57cdb6d9d7-rj7jk.default”,request.method="POST",request.path=”/istio.mixer.v1.Mixer/Check”,request.scheme="https" -i request.size=1235,response.size=1024,response.duration=100 --bytes_attributes source.ip=ac:11:0:0d,destination.ip=ac:11:0:03
-    ```
-    This [page](https://github.com/istio/istio/wiki/Mixer-Running-a-Local-Instance) has a good (and maybe the only?) rich mixc example.
+# Testing
 
-    It is always good to have the [mixc reference](https://istio.io/docs/reference/commands/mixc/) bookmarked.
+When Testing I use the following _mixc_ CLI in order to fully exercise the code. Notice that I am using MACOS.
+```
+    $GOPATH/out/darwin_amd64/release/mixc report --timestamp_attributes request.time="2017-07-04T00:01:10Z" -s destination.service="svc.cluster.local",source.user=”kubernetes://nets-57cdb6d9d7-rj7jk.default”,request.method="POST",request.path=”/istio.mixer.v1.Mixer/Check”,request.scheme="https" -i request.size=1235,response.size=1024,response.duration=100 --bytes_attributes source.ip=ac:11:0:0d,destination.ip=ac:11:0:03
+```
+
+If want to see mixs debug logs, start it with:
+
+```
+$GOPATH/out/darwin_amd64/release/mixs server --configStoreURL=fs://$(pwd)/mixer/adapter/mygrpcadapter/testdata --log_output_level debug
+```
+
+# Troubleshooting
+
+If you see:
+
+```
+E1029 23:21:38.114345   93959 start.go:302] Error restarting cluster:  restarting kube-proxy: waiting for kube-proxy to be up for configmap update: timed out waiting for the condition
+```
+It possibly means you are (or were) connected to a VPN. In my case only a restart would solve this issue. Minikube stop, delete and rm -rf ~/.kube would not solve it.
+
+# References
+
+ * This [page](https://github.com/istio/istio/wiki/Mixer-Running-a-Local-Instance) has a good (and maybe the only?) rich mixc example.
+
+ * It is always good to have the [mixc reference](https://istio.io/docs/reference/commands/mixc/) bookmarked.
+
+ * [Istio Dev Guide](https://github.com/istio/istio/wiki/Dev-Guide)
+
+ * [MOPA Walkthrough](https://github.com/istio/istio/wiki/Mixer-Out-of-Process-Adapter-Walkthrough)
+
+ * For some background information you should read the [Mixer Compiled In Adapter Dev Guide](https://github.com/istio/istio/wiki/Mixer-Compiled-In-Adapter-Dev-Guide)
+
+ * Minikube [Releases](https://github.com/kubernetes/minikube/releases) page
+
+ * [Prometheus Out of Mixer Example](https://github.com/istio/istio/tree/master/mixer/test/prometheus). Useful after you've mastered the MOPA walkthough and are familiar with deploying apps in Kubernetes.
+
+ Background info on Policies and Telemetry. A must read to understand what is going on.
+
+
 
 
 
