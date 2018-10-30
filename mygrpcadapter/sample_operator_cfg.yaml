@@ -1,0 +1,41 @@
+# handler for adapter mygrpcadapter
+apiVersion: "config.istio.io/v1alpha2"
+kind: handler
+metadata:
+  name: h1
+  namespace: istio-system
+spec:
+  adapter: mygrpcadapter
+  connection:
+    address: "{ADDRESS}" #replaces at runtime by the test
+  params:
+    file_path: "out.txt"
+---
+
+# instance for template logentry
+apiVersion: "config.istio.io/v1alpha2"
+kind: instance
+metadata:
+  name: i1logentry
+  namespace: istio-system
+spec:
+  template: logentry
+  params:
+    severity: '"Default"'
+    timestamp: request.time
+    variables:
+      requestSize: request.size | 0
+---
+
+# rule to dispatch to handler h1
+apiVersion: "config.istio.io/v1alpha2"
+kind: rule
+metadata:
+  name: r1
+  namespace: istio-system
+spec:
+  actions:
+  - handler: h1.istio-system
+    instances:
+    - i1logentry
+---
