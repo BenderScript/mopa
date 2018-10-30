@@ -1,10 +1,10 @@
-# Mixer Out of Process LogEntry Adapter Walkthrough
+# LogEntry Mixer Out of Process Adapter (MOPA) Walkthrough
 
-This is an adaptation and expansion of the [Mixer Out of Process Adapter (MOPA) Walkthrough](https://github.com/istio/istio/wiki/Mixer-Out-of-Process-Adapter-Walkthrough) tutorial.
+This is an adaptation and expansion of the [Mixer Out of Process Adapter (MOPA) Walkthrough](https://github.com/istio/istio/wiki/Mixer-Out-of-Process-Adapter-Walkthrough).
 
 ## Why this Guide
 
-Although I managed to get the metric example working, it was rough because setup information is scattered across many pages with sometimes confusing or conflicting information. For example:
+The MOPA walkthrough is very nice, but the prep work needed before actually going through the example is very rough. Information is scattered across many pages with sometimes confusing or conflicting information. For example:
 
 * The [Istio Dev Guide](https://github.com/istio/istio/wiki/Dev-Guide) suggests to start Minikube with:
 
@@ -25,9 +25,16 @@ minikube start --memory=8192 --cpus=4 --kubernetes-version=v1.9.4 \
 ```
 kubectl apply -f install/kubernetes/helm/istio/templates/crds.yaml
 ```
+
 Finally, I faced a couple of [bugs](https://github.com/istio/istio/issues/9459) that were handled very graciously by the Istio folks.
 
-Therefore I thought it was would be nice for me to give back to the community by writing this small walkthough.
+Therefore I thought it would be nice to give back to the community by writing this small guide.
+
+## Target Audience
+
+This guide is a summary and adaption of many other existing pages. It is for people that want to experiment and get their feet wet with MOPAs but not necessarily push code back to Istio.
+
+Furthermore this guide was tested on Minikube running on MacOS with VirtualBox installed.
 
 ## Background
 
@@ -35,23 +42,32 @@ I suggest you read the page on [Policies and Telemetry](https://istio.io/docs/co
 
 ## Setup
 
-1. Follow the Istio Dev Guide up to and including [Setting Up Environment Variables](https://github.com/istio/istio/wiki/Dev-Guide#setting-up-environment-variables)
+1. We will start with the original [MOPA Walkthrough](https://github.com/istio/istio/wiki/Mixer-Out-of-Process-Adapter-Walkthrough) which will direct us to the Istio Dev Guide
 
-    Some Important observations:
+2. Follow the Istio Dev Guide up to and  including [Other Dependencies](https://github.com/istio/istio/wiki/Dev-Guide#other-dependencies). Do not go further.
 
-    * Install Minikube but start it with:
+   * At some point you might be directed to the [Istio Quick Start Guide](https://istio.io/docs/setup/kubernetes/quick-start/)  but **nothing in there is needed for this example**
+
+2. Install Minikube from the [official documentation](https://kubernetes.io/docs/tasks/tools/install-minikube/) .
+
+    * Start Minikube:
 
         ```
         minikube start --bootstrapper kubeadm
         ```
+3. Switch back to the Istio Dev Guide and follow _only_ the section [Setting up environment variables]https://github.com/istio/istio/wiki/Dev-Guide#setting-up-environment-variables
 
-    * At some point you might be directed to the [Istio Quick Start Guide](https://istio.io/docs/setup/kubernetes/quick-start/)  but **nothing in there is needed for this example**
+3. Now go back to the original MOPA Walkthgouh but in the section [Before you Start](https://github.com/istio/istio/wiki/Mixer-Out-of-Process-Adapter-Walkthrough#before-you-start), checkout the Istio branch with the necessary fixes. As of this writing the branch is [release-1.1](https://github.com/istio/istio/tree/release-1.1). In other words, it should read:
 
-2. Switch to the original MOPA Walkthgouh but in the section [Before you Start](https://github.com/istio/istio/wiki/Mixer-Out-of-Process-Adapter-Walkthrough#before-you-start), checkout the Istio branch with the necessary fixes. As of this writing the branch is [release-1.1](https://github.com/istio/istio/tree/release-1.1)
+    ```
+    mkdir -p $GOPATH/src/istio.io/ && \
+    cd $GOPATH/src/istio.io/  && \
+    git clone https://github.com/istio/istio.git --branch release-1.1
+    ```
 
     **Notice that there is no need to compile Istio at all for this MOPA walkthrough.**
 
-3. Follow the overall structure of the original MOPA walkthough but use the _mygrpcadapter_ from this repo.
+4. Follow the overall structure of the original MOPA walkthough but use the _mygrpcadapter_ from this repo.
 
 # Testing
 
