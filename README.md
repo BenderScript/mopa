@@ -87,6 +87,43 @@ If want to see mixs debug logs, start it with:
 $GOPATH/out/darwin_amd64/release/mixs server --configStoreURL=fs://$(pwd)/mixer/adapter/mygrpcadapter/testdata --log_output_level debug
 ```
 
+If every goes okay you will see similar output
+
+```
+listening on "[::]:9000"
+2018-10-30T08:05:55.488405Z info  received request {[&InstanceMsg{Variables:map[
+string]*istio_policy_v1beta11.Value{destinationIp:
+&Value{Value:&Value_IpAddressValue{IpAddressValue:&IPAddress{Value:[172 17 0 3],},},},latency:
+&Value{Value:&Value_DurationValue{DurationValue:&Duration{Value:100ns,},},},method:
+&Value{Value:&Value_StringValue{StringValue:POST,},},protocol:
+&Value{Value:&Value_StringValue{StringValue:https,},},requestSize:
+&Value{Value:&Value_Int64Value{Int64Value:1235,},},responseCode:
+&Value{Value:&Value_Int64Value{Int64Value:0,},},responseSize:
+&Value{Value:&Value_Int64Value{Int64Value:1024,},},sourceIp:
+&Value{Value:&Value_IpAddressValue{IpAddressValue:&IPAddress{Value:[172 17 0 13],},},},sourceUser:
+&Value{Value:&Value_StringValue{StringValue:”kubernetes://nets-57cdb6d9d7-rj7jk.default”,},},url:
+&Value{Value:&Value_StringValue{StringValue:”/istio.mixer.v1.Mixer/Check”,},},},Timestamp:&istio_polic
+y_v1beta11.TimeStamp{Value:2017-07-04T00:01:10Z,},Severity:Default,MonitoredResourceType:,
+MonitoredResourceDimensions:map[string]*istio_policy_v1beta11.Value{},Name:i1logentry.instance.istio-system,}]
+&Any{TypeUrl:type.googleapis.com/adapter.mygrpcadapter.config.Params,Value:[10 7 111 117 116 46 116
+120 116],XXX_unrecognized:[],} 17679084362437296840}
+
+TimeStamp:  2017-07-04T00:01:10Z
+Severity:  Default
+protocol :  https
+sourceUser :  ”kubernetes://nets-57cdb6d9d7-rj7jk.default”
+destinationIp :  172.17.0.3
+requestSize :  1235
+sourceIp :  172.17.0.13
+responseCode :  0
+latency :  100ns
+url :  ”/istio.mixer.v1.Mixer/Check”
+method :  POST
+responseSize :  1024
+2018-10-30T08:05:55.488756Z	info	writing instances to file out.txt
+
+```
+
 # Troubleshooting
 
 If you see:
@@ -121,7 +158,7 @@ For reference, this is the [github](https://github.com/kubernetes/minikube/issue
 
  * [Mixer Out Of Process Adapter Dev Guide](https://github.com/istio/istio/wiki/Mixer-Out-Of-Process-Adapter-Dev-Guide)
 
- 
+
 
 
 
