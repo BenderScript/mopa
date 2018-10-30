@@ -83,6 +83,8 @@ for the condition
 ```
 It possibly means you are (or were) connected to a VPN. In my case only a computer restart would solve this issue. Minikube stop, delete and rm -rf ~/.kube would not solve it. Other suggestions?
 
+For reference, this is the [github](https://github.com/kubernetes/minikube/issues/3022) issue with a long list of complains and possible solutions.
+
 # References
 
  * This [page](https://github.com/istio/istio/wiki/Mixer-Running-a-Local-Instance) has a good (and maybe the only?) rich mixc example.
