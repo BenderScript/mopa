@@ -34,7 +34,7 @@ Therefore I thought it would be nice to give back to the community by writing th
 
 This guide is a summary and adaption of many other existing pages. It is for people that want to experiment and get their feet wet with MOPAs but not necessarily push code back to Istio.
 
-Furthermore this guide was tested on Minikube running on MacOS with VirtualBox installed.
+Furthermore this guide was tested with Minikube running on MacOS with VirtualBox installed.
 
 ## Background
 
