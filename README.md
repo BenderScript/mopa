@@ -119,6 +119,10 @@ For reference, this is the [github](https://github.com/kubernetes/minikube/issue
 
  * Background info on [Policies and Telemetry](https://istio.io/docs/concepts/policies-and-telemetry/) .
 
+ * [Mixer Out Of Process Adapter Dev Guide](https://github.com/istio/istio/wiki/Mixer-Out-Of-Process-Adapter-Dev-Guide)
+
+ 
+
 
 
 
